@@ -28,10 +28,10 @@ BuildRequires:  git subversion
 Patch:          %{name}-replace-ld-by-distro.patch
 # [Fedora-specific] We'll only package 1 recompiled version of `rlimit`.
 Patch:          %{name}-single-rlimit-exec.patch
-# [Fedora-specific] `ast.dump` no longer prints the `asname` when equal to None.
-Patch:          %{name}-ast-dump-omits-asname-none.patch
 # [Fedora-specific] Use Python 3 for building the docs.
 Patch:          %{name}-use-python3-for-building-the-docs.patch
+# [Fedora-specific] PyPI packages `pytest-socket` and `pytest-html` are not (yet) available on Fedora.
+Patch:          %{name}-pytest-socket-and-pytest-html-not-available.patch
 
 
 %global common_description_en \
@@ -131,5 +131,8 @@ sed --in-place \
 ###############
 
 %changelog
+* Sun Oct 02 2022 Dennis van Raaij <dvraaij@fedoraproject.org> - 22.2.0-1
+- Updated to v22.2.0.
+
 * Sun Sep 04 2022 Dennis van Raaij <dvraaij@fedoraproject.org> - 22.1.0-1
 - New package.

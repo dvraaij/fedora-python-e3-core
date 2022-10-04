@@ -11,7 +11,7 @@
  version_file = os.path.join(os.path.dirname(__file__), "VERSION")
 --- a/src/e3/os/platform.py
 +++ b/src/e3/os/platform.py
-@@ -85,12 +85,12 @@
+@@ -78,12 +78,12 @@
  
          # Fetch linux distribution info on linux OS
          if cls.uname.system == "Linux":  # linux-only
@@ -27,4 +27,4 @@
 +                "version": distro.version(),
              }
  
-         # Fetch network interfaces
+         # Fetch core numbers. Note that the methods does not work
