@@ -1,0 +1,102 @@
+--- a/setup.py
++++ b/setup.py
+@@ -12,7 +12,7 @@
+     "stevedore>1.20.0",
+ ]
+ 
+-extras_require = {"config": ["tomlkit", "typeguard"], "test": ["pytest-socket"]}
++extras_require = {"config": ["tomlkit", "typeguard"]}
+ 
+ for p in ("darwin", "linux", "linux2", "win32"):
+     platform_string = ":sys_platform=='%s'" % p
+--- a/tests/tests_e3/net/http_test.py
++++ b/tests/tests_e3/net/http_test.py
+@@ -4,6 +4,8 @@
+ import threading
+ import time
+ 
++import pytest
++
+ import requests_toolbelt.multipart
+ from e3.net.http import HTTPSession, HTTPError
+ 
+@@ -112,6 +114,7 @@
+         with HTTPSession():
+             pass
+ 
++    @pytest.mark.skip(reason="PyPI package pytest-socket not available (yet) as Fedora package")
+     def test_retry(self, socket_enabled):
+         def func(server, base_url):
+             with HTTPSession() as session:
+@@ -124,6 +127,7 @@
+ 
+         run_server(RetryHandler, func)
+ 
++    @pytest.mark.skip(reason="PyPI package pytest-socket not available (yet) as Fedora package")
+     def test_content_dispo(self, socket_enabled):
+         def func(server, base_url):
+             with HTTPSession() as session:
+@@ -135,6 +139,7 @@
+ 
+         run_server(ContentDispoHandler, func)
+ 
++    @pytest.mark.skip(reason="PyPI package pytest-socket not available (yet) as Fedora package")
+     def test_content_validation(self, socket_enabled):
+         def validate(path):
+             return False
+@@ -148,6 +153,7 @@
+ 
+         run_server(ContentDispoHandler, func)
+ 
++    @pytest.mark.skip(reason="PyPI package pytest-socket not available (yet) as Fedora package")
+     def test_error(self, socket_enabled):
+         def func(server, base_url):
+             with HTTPSession() as session:
+@@ -165,6 +171,7 @@
+ 
+         run_server(ServerErrorHandler, func)
+ 
++    @pytest.mark.skip(reason="PyPI package pytest-socket not available (yet) as Fedora package")
+     def test_fallback(self, socket_enabled):
+         def func(server, base_url):
+             def inner_func(server2, base_url2):
+@@ -180,6 +187,7 @@
+ 
+         run_server(ServerErrorHandler, func)
+ 
++    @pytest.mark.skip(reason="PyPI package pytest-socket not available (yet) as Fedora package")
+     def test_content_abort(self, socket_enabled):
+         def func(server, base_url):
+             def inner_func(server2, base_url2):
+@@ -196,6 +204,7 @@
+ 
+         run_server(ServerErrorHandler, func)
+ 
++    @pytest.mark.skip(reason="PyPI package pytest-socket not available (yet) as Fedora package")
+     def test_post_stream_data(self, socket_enabled):
+         def outter_func(nok_server, nok_url):
+             def func(server, url):
+--- a/tox.ini
++++ b/tox.ini
+@@ -4,10 +4,8 @@
+ [testenv]
+ deps =
+      pytest
+-     pytest-html
+      ansi2html
+      xdist: pytest-xdist[psutil]
+-     pytest-socket
+      mock
+      # httpretty version 1.0.0 seems to be buggy, crash at install time
+      httpretty != 1.0.0
+@@ -22,9 +20,8 @@
+ # Run testsuite with coverage when '-cov' is in the env name
+ commands=
+     {envpython} {toxinidir}/tests/gen-cov-config.py {toxinidir}/.coveragerc
+-    py.test --ignore=build -vv --html=pytest-report.html --self-contained-html \
++    py.test --ignore=build -vv \
+     xdist: -n auto \
+-    --disable-socket \
+     ci: --ci \
+     cov: --cov={envsitepackagesdir}/e3 --cov-report= --cov-fail-under=0 --cov-branch \
+     []
