@@ -1,0 +1,18 @@
+--- a/docs/Makefile
++++ b/docs/Makefile
+@@ -3,7 +3,7 @@
+ 
+ # You can set these variables from the command line.
+ SPHINXOPTS    =
+-SPHINXBUILD   = python -msphinx
++SPHINXBUILD   = python3 -msphinx
+ SPHINXPROJ    = e3-core
+ SOURCEDIR     = source
+ BUILDDIR      = build
+@@ -17,4 +17,4 @@
+ # Catch-all target: route all unknown targets to Sphinx using the new
+ # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+ %: Makefile
+-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+\ No newline at end of file
++	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
