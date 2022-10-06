@@ -1,0 +1,75 @@
+--- a/tests/tests_e3/sys/main_test.py
++++ b/tests/tests_e3/sys/main_test.py
+@@ -34,46 +34,46 @@
+ 
+     expected = "Module(body=["
+ 
+-    expected += "Import(names=[alias(name='c', asname=None)]),"
++    expected += "Import(names=[alias(name='c')]),"
+     # import a, b, c
+     # b and a skipped
+ 
+     expected += (
+-        " Import(names=[alias(name='a1', asname=None),"
+-        " alias(name='c', asname=None)]),"
++        " Import(names=[alias(name='a1'),"
++        " alias(name='c')]),"
+     )
+     # import a1, b, c => a1, c  -- b is skipped
+ 
+-    expected += " Import(names=[alias(name='a2', asname=None)]),"
++    expected += " Import(names=[alias(name='a2')]),"
+     # import a2, a3 => a2 -- a3 is skipped (.*3)
+ 
+     expected += (
+         " ImportFrom(module='d',"
+-        " names=[alias(name='l1', asname=None),"
+-        " alias(name='l2', asname=None),"
+-        " alias(name='c3', asname=None)], level=0),"
++        " names=[alias(name='l1'),"
++        " alias(name='l2'),"
++        " alias(name='c3')], level=0),"
+     )
+     # from d import l1, l2, c3 - not modified
+ 
+     expected += (
+         " ImportFrom(module='foo.bar.module',"
+-        " names=[alias(name='name1', asname=None),"
+-        " alias(name='name3', asname=None)], level=0),"
++        " names=[alias(name='name1'),"
++        " alias(name='name3')], level=0),"
+     )
+     # from foo.bar.module import name1, name2, name3
+     # .*\.bar\..* name2 -> name2 is skipped
+ 
+     expected += (
+         " ImportFrom(module='foo.bar2.module',"
+-        " names=[alias(name='name1', asname=None), "
+-        "alias(name='name2', asname=None), "
+-        "alias(name='name3', asname=None)], level=0),"
++        " names=[alias(name='name1'), "
++        "alias(name='name2'), "
++        "alias(name='name3')], level=0),"
+     )
+     # from foo.bar2.module import name1, name2, name3 - not modifed
+ 
+     expected += (
+         " ImportFrom(module='foo.bar2.module',"
+-        " names=[alias(name='name2', asname=None)], level=0),"
++        " names=[alias(name='name2')], level=0),"
+     )
+     # from foo.bar2.module import name2 - not modified
+ 
+@@ -98,9 +98,9 @@
+ 
+     # verify that import a is rejected
+     assert (
+-        "Import(names=[alias(name='a', asname=None),"
+-        " alias(name='b', asname=None),"
+-        " alias(name='c', asname=None)])" in str(err.value)
++        "Import(names=[alias(name='a'),"
++        " alias(name='b'),"
++        " alias(name='c')])" in str(err.value)
+     )
+ 
+     node3 = ast.parse(script, "<string>")
