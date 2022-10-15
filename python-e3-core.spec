@@ -26,6 +26,8 @@ BuildRequires:  git subversion
 
 # [Fedora specific] PyPI package `ld` is not available and seems obsolete, use `distro` instead.
 Patch:          %{name}-replace-ld-by-distro.patch
+# [Fedora specific] Add the s390x and PowerPC platforms to the knowledge base.
+Patch:          %{name}-adapt-knowledge-base-for-fedora.patch
 # [Fedora specific] We'll only package 1 recompiled version of `rlimit`.
 Patch:          %{name}-single-rlimit-exec.patch
 # [Fedora specific] Use Python 3 for building the docs.
@@ -61,6 +63,17 @@ Summary:    %{summary}
 
 # Remove all pre-compiled `rlimit` executables.
 rm src/e3/os/data/rlimit*
+
+# Emit some platform information that will be used to guess the host:
+#
+#   src/e3/platform_db/knowledge_base.py, HOST_GUESS
+#
+#   os  : uname -s
+#   cpu : uname -m
+#
+uname -s
+uname -m
+gcc -dumpmachine
 
 
 ############################
