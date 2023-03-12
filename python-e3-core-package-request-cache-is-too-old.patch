@@ -1,0 +1,13 @@
+--- a/tests/tests_e3/cve/cve_test.py
++++ b/tests/tests_e3/cve/cve_test.py
+@@ -1,8 +1,9 @@
+ from e3.cve import NVD
+ 
+ import os
++import pytest
+ 
+-
++@pytest.mark.xfail(reason="The PyPI package requests_cache available in Fedora is too old")
+ def test_nvd_cve_search(socket_disabled):
+     """Test the CVE DB research using cached data."""
+     from requests_cache import NEVER_EXPIRE

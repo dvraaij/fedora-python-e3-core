@@ -1,6 +1,6 @@
 --- a/setup.py
 +++ b/setup.py
-@@ -18,7 +18,7 @@
+@@ -45,7 +45,7 @@
      platform_string = ":sys_platform=='%s'" % p
      extras_require[platform_string] = ["psutil"]
      if p in ("linux", "linux2"):

@@ -1,6 +1,6 @@
 --- a/setup.py
 +++ b/setup.py
-@@ -49,7 +49,7 @@
+@@ -78,7 +78,7 @@
      ],
      packages=find_packages(where="src"),
      package_dir={"": "src"},
@@ -11,11 +11,11 @@
      entry_points={
 --- a/src/e3/os/process.py
 +++ b/src/e3/os/process.py
-@@ -74,15 +74,11 @@
+@@ -76,15 +76,11 @@
          signal.signal(signal.SIGPIPE, signal.SIG_DFL)  # all: no cover
  
  
--def get_rlimit(platform: Optional[str] = None) -> str:
+-def get_rlimit(platform: str | None = None) -> str:
 -    if platform is None:
 -        platform = e3.env.Env().build.platform
 -    if platform == "x86_64-windows64":
@@ -31,7 +31,7 @@
  def quote_arg(arg: str) -> str:
 --- a/tests/tests_e3/os/process/main_test.py
 +++ b/tests/tests_e3/os/process/main_test.py
-@@ -384,9 +384,8 @@
+@@ -529,9 +529,8 @@
  
  
  def test_no_rlimit(caplog):

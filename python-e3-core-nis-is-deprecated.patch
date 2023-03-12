@@ -1,0 +1,25 @@
+--- a/src/e3/os/platform.py
++++ b/src/e3/os/platform.py
+@@ -105,22 +105,6 @@
+ 
+         cls.nis_domain = UNKNOWN
+ 
+-        if sys.platform != "win32":  # windows: no cover
+-            try:
+-                import nis
+-            except ImportError:  # defensive code
+-                nis = None  # type: ignore
+-
+-            if nis is not None:
+-                try:
+-                    cls.nis_domain = nis.get_default_domain()
+-                    if not cls.nis_domain:  # defensive code
+-                        cls.nis_domain = UNKNOWN
+-                except nis.error:  # defensive code
+-                    # this is not a problem anymore, we do not want
+-                    # to log it either, so we just ignore it.
+-                    pass
+-
+     @classmethod
+     def platform(cls) -> str:
+         """Guess platform name.

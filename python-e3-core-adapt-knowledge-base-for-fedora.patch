@@ -1,6 +1,6 @@
 --- a/src/e3/platform_db/knowledge_base.py
 +++ b/src/e3/platform_db/knowledge_base.py
-@@ -16,6 +16,8 @@ CPU_INFO: PlatformDBEntry = {
+@@ -16,6 +16,8 @@
      "avr": {"endian": "little", "bits": 16},
      "powerpc": {"endian": "big", "bits": 32},
      "powerpc64": {"endian": "big", "bits": 64},
@@ -9,7 +9,7 @@
      "sparc": {"endian": "big", "bits": 32},
      "sparc64": {"endian": "big", "bits": 64},
      "x86": {"endian": "little", "bits": 32},
-@@ -87,12 +89,14 @@ PLATFORM_INFO: PlatformDBEntry = {
+@@ -88,12 +90,14 @@
      "arm-linux": {"cpu": "arm", "os": "linux", "is_hie": False, "endian": "little"},
      "ppc-aix": {"cpu": "powerpc", "os": "aix", "is_hie": False},
      "ppc-linux": {"cpu": "powerpc", "os": "linux", "is_hie": False},
@@ -24,7 +24,7 @@
      "sparc64-solaris": {"cpu": "sparc64", "os": "solaris", "is_hie": False},
      "sparc-solaris": {"cpu": "sparc", "os": "solaris", "is_hie": False},
      "x86_64-linux": {"cpu": "x86_64", "os": "linux", "is_hie": False},
-@@ -124,7 +128,9 @@ BUILD_TARGETS: PlatformDBEntry = {
+@@ -126,7 +130,9 @@
      "arm-linux": {"name": "arm-linux-gnueabi"},
      "ppc-aix": {"name": "powerpc-ibm-aix%(os_version)s.0.0"},
      "ppc-linux": {"name": "powerpc-generic-linux-gnu"},
@@ -34,15 +34,15 @@
      "sparc64-solaris": {"name": "sparc64-sun-solaris%(os_version)s"},
      "sparc-solaris": {"name": "sparc-sun-solaris%(os_version)s"},
      "x86_64-linux": {"name": "x86_64-pc-linux-gnu"},
-@@ -158,6 +164,7 @@ HOST_GUESS: PlatformDBEntry = {
-     # platform : OS (uname[0]), machine (uname[1]), proc (uname[4 or 5])
+@@ -161,6 +167,7 @@
+     "aarch64-darwin": {"os": "Darwin", "cpu": "arm64"},
      "aarch64-linux": {"os": "Linux", "cpu": "aarch64"},
      "ppc-aix": {"os": "AIX", "cpu": None},
 +    "ppc64le-linux": {"os": "Linux", "cpu": "ppc64le"},
      "x86_64-darwin": {"os": "Darwin", "cpu": "i386"},
      "x86-freebsd": {"os": "FreeBSD", "cpu": "i386"},
      "x86-openbsd": {"os": "OpenBSD", "cpu": None},
-@@ -167,10 +174,10 @@ HOST_GUESS: PlatformDBEntry = {
+@@ -170,11 +177,11 @@
      "x86_64-openbsd": {"os": "OpenBSD", "cpu": None},
      "x86_64-netbsd": {"os": "NetBSD", "cpu": None},
      "x86_64-dragonfly": {"os": "DragonFly", "cpu": None},
@@ -51,6 +51,7 @@
      "x86_64-linux": {"os": "Linux", "cpu": "x86_64"},
      "sparc-solaris": {"os": "SunOS", "cpu": "sparc"},
      "x86-solaris": {"os": "SunOS", "cpu": "i386"},
+     "x86_64-windows64": {"os": "Windows", "cpu": "AMD64|amd64|x86_64"},
      "x86-windows": {"os": "Windows", "cpu": None},
-+    "s390x-linux": {"os": "Linux", "cpu": "s390x"},
++    "s390x-linux": {"os": "Linux", "cpu": "s390x"}
  }

@@ -1,7 +1,7 @@
 # Upstream source information.
 %global upstream_owner    AdaCore
 %global upstream_name     e3-core
-%global upstream_version  22.2.0
+%global upstream_version  22.4.0
 %global upstream_gittag   v%{upstream_version}
 
 # Python Package Index name.
@@ -9,7 +9,7 @@
 
 Name:           python-%{pypi_name}
 Version:        %{upstream_version}
-Release:        3%{?dist}
+Release:        1%{?dist}
 Summary:        Core framework for developing portable automated build systems
 
 License:        GPL-3.0-only
@@ -21,8 +21,10 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-tox
 # GCC for recompiling the included `rlimit` tool.
 BuildRequires:  gcc
-# Git and SVN are used during testing (to test the interaction between e3 and Git/SVN).
-BuildRequires:  git subversion
+# Git, Subversion and OpenSSL are required for some tests.
+BuildRequires:  git
+BuildRequires:  subversion
+BuildRequires:  openssl
 
 # [Fedora-specific] PyPI package `ld` is not available and seems obsolete, use `distro` instead.
 Patch:          %{name}-replace-ld-by-distro.patch
@@ -36,6 +38,12 @@ Patch:          %{name}-use-python3-for-building-the-docs.patch
 Patch:          %{name}-pytest-socket-and-pytest-html-not-available.patch
 # [Fedora-specific] Fix regression due to changes in the `typeguard` package.
 Patch:          %{name}-fix-regression-typeguard.patch
+# [Fedora-specific] PyPI packages `request-cache` currently available on Fedora is too old.
+Patch:          %{name}-package-request-cache-is-too-old.patch
+# [Fedora-specific] Set PROMPT_COMMAND environment variable in test.
+Patch:          %{name}-set-prompt-command.patch
+# [Python] 'nis' is deprecated and slated for removal in Python 3.13.
+Patch:          %{name}-nis-is-deprecated.patch
 
 %global common_description_en \
 E3 is a Python framework to ease the development of portable automated build \
@@ -110,9 +118,6 @@ gcc -dumpmachine
 %pyproject_install
 %pyproject_save_files e3
 
-# Show installed files (to ease debugging based on build server logs).
-find %{buildroot} -exec stat --format "%A %n" {} \;
-
 
 ###########
 ## Check ##
@@ -124,6 +129,9 @@ find %{buildroot} -exec stat --format "%A %n" {} \;
 sed --in-place \
     --expression='s,python_script("e3"),python_script("%{buildroot}%{_bindir}/e3"),' \
     tests/tests_e3/system/main_test.py
+sed --in-place \
+    --expression='s,python_script("e3-pypi-closure"),python_script("%{buildroot}%{_bindir}/e3-pypi-closure"),' \
+    tests/tests_e3/python/main_test.py
 
 %tox
 
@@ -137,6 +145,7 @@ sed --in-place \
 %doc README* NEWS*
 %{_bindir}/e3
 %{_bindir}/e3-sandbox
+%{_bindir}/e3-pypi-closure
 %{python3_sitelib}/e3_core-*-py3.*-nspkg.pth
 
 
@@ -145,6 +154,9 @@ sed --in-place \
 ###############
 
 %changelog
+* Sun Jan 21 2024 Dennis van Raaij <dvraaij@fedoraproject.org> - 22.4.0-1
+- Updated to v22.4.0.
+
 * Sun Aug 6 2023 Dennis van Raaij <dvraaij@fedoraproject.org> - 22.2.0-3
 - Fixed regression due to changes in the 'typeguard' package.
 

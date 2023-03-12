@@ -22,3 +22,15 @@
                  else:
                      kwargs[k] = v
  
+--- a/setup.py
++++ b/setup.py
+@@ -20,8 +20,7 @@
+ extras_require = {
+     "config": [
+         "tomlkit",
+-        # There are some backward incompatible checks in typeguard 3.x
+-        "typeguard<3.0.0",
++        "typeguard",
+     ],
+     "test": [
+         "mock",
