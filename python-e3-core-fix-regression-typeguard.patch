@@ -1,0 +1,24 @@
+--- a/src/e3/config.py
++++ b/src/e3/config.py
+@@ -5,7 +5,7 @@
+ from typing import TYPE_CHECKING, get_type_hints, ClassVar
+ 
+ try:
+-    from typeguard import check_type
++    from typeguard import check_type, TypeCheckError
+ 
+     CONFIG_CHECK_TYPE = True
+ except ImportError:  # defensive code
+@@ -63,9 +63,9 @@
+                 ftype = cls_fields[k]
+                 try:
+                     if CONFIG_CHECK_TYPE:
+-                        check_type(f"{cls.title}.{k}", v, ftype)
+-                except TypeError as err:
+-                    logging.error(str(err))
++                        check_type(v, ftype)
++                except TypeCheckError as err:
++                    logging.error(f"type of {cls.title}.{k} must be {ftype.__qualname__}")
+                 else:
+                     kwargs[k] = v
+ 

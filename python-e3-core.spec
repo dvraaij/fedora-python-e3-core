@@ -9,7 +9,7 @@
 
 Name:           python-%{pypi_name}
 Version:        %{upstream_version}
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Core framework for developing portable automated build systems
 
 License:        GPL-3.0-only
@@ -34,7 +34,8 @@ Patch:          %{name}-single-rlimit-exec.patch
 Patch:          %{name}-use-python3-for-building-the-docs.patch
 # [Fedora-specific] PyPI packages `pytest-socket` and `pytest-html` are not (yet) available on Fedora.
 Patch:          %{name}-pytest-socket-and-pytest-html-not-available.patch
-
+# [Fedora-specific] Fix regression due to changes in the `typeguard` package.
+Patch:          %{name}-fix-regression-typeguard.patch
 
 %global common_description_en \
 E3 is a Python framework to ease the development of portable automated build \
@@ -144,6 +145,9 @@ sed --in-place \
 ###############
 
 %changelog
+* Sun Aug 6 2023 Dennis van Raaij <dvraaij@fedoraproject.org> - 22.2.0-3
+- Fixed regression due to changes in the 'typeguard' package.
+
 * Sat Oct 15 2022 Dennis van Raaij <dvraaij@fedoraproject.org> - 22.2.0-2
 - Added the s390x and PowerPC platforms to the knowledge base.
 
